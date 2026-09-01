@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Prateek L N — Unity game developer and Game Development Team Lead in Bangalore. Shipped games on Android, iOS and WebGL.">
+<meta name="theme-color" content="#16181d">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Prateek L N — Unity Game Developer">
+<meta property="og:description" content="Gameplay systems, editor tooling and release pipelines across Android, iOS and WebGL.">
+<!-- Add a share image once you have one: put a 1200x630 jpg at assets/og.jpg and uncomment.
+<meta property="og:image" content="https://prateek-ln2002.github.io/portfolio/assets/og.jpg"> -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2316181d'/><text x='16' y='23' font-size='19' text-anchor='middle' fill='%23e9a13b' font-family='monospace' font-weight='bold'>P</text></svg>">
+<title>Prateek L N</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ---- Deliberate single-theme design: a dark editor-chrome world.
+       Every colour is painted explicitly so the page holds on any host ground. ---- */
+:root{
+  --ground:#16181d;
+  --panel:#1c1f26;
+  --panel-2:#22262e;
+  --line:#2d323b;
+  --line-soft:#252a32;
+  --ink:#e8eaee;
+  --ink-2:#a0a8b4;
+  --ink-3:#6d7684;
+  --accent:#e9a13b;
+  --accent-soft:rgba(233,161,59,.13);
+  --live:#69b391;
+  --wip:#8a93a0;
+  --radius:5px;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:15.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit}
+img,video{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:1120px;margin-inline:auto;padding-inline:clamp(20px,5vw,48px)}
+
+/* ---------- type ---------- */
+h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0}
+.eyebrow{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 14px;display:flex;align-items:center;gap:12px;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+.lede{color:var(--ink-2);max-width:62ch}
+
+/* ---------- top bar ---------- */
+.bar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(22,24,29,.82);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-soft);
+}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:58px}
+.mark{font-family:var(--f-display);font-variation-settings:"wdth" 118;font-weight:700;font-size:15px;letter-spacing:.01em}
+.mark span{color:var(--accent)}
+.bar nav{display:flex;gap:22px;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.bar nav a{color:var(--ink-2);text-decoration:none;padding:4px 0;border-bottom:1px solid transparent;transition:color .18s,border-color .18s}
+.bar nav a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+@media(max-width:620px){.bar nav{gap:14px;font-size:11px}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:clamp(56px,11vw,110px) 0 clamp(44px,7vw,72px);overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:-40% -20% auto -20%;height:110%;
+  background:radial-gradient(52% 60% at 30% 0%,rgba(233,161,59,.16),transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.075) 1px,transparent 0);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 78%);
+  mask-image:linear-gradient(to bottom,#000 0%,transparent 78%);
+}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{
+  font-size:clamp(2.7rem,8vw,5rem);line-height:.98;letter-spacing:-.025em;
+  font-variation-settings:"wdth" 112;font-weight:800;margin-bottom:20px;
+}
+.hero h1 em{font-style:normal;color:var(--accent);font-variation-settings:"wdth" 90}
+.hero .lede{font-size:clamp(1rem,1.9vw,1.18rem);margin:0 0 30px}
+.meta-strip{
+  display:flex;flex-wrap:wrap;gap:1px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--line-soft);overflow:hidden;max-width:760px;
+}
+.meta-strip div{
+  flex:1 1 158px;padding:13px 16px;background:var(--panel);
+}
+.meta-strip dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:0 0 4px}
+.meta-strip dd{margin:0;font-size:14px;font-weight:500;color:var(--ink)}
+
+/* ---------- sections ---------- */
+section{padding:clamp(52px,8vw,84px) 0;border-top:1px solid var(--line-soft)}
+.sec-head{margin-bottom:clamp(28px,4vw,44px)}
+.sec-head h2{font-size:clamp(1.5rem,3.4vw,2.05rem);letter-spacing:-.015em;font-variation-settings:"wdth" 108;margin-bottom:10px}
+
+/* ---------- project entry ---------- */
+.entry{display:grid;grid-template-columns:1.12fr 1fr;gap:clamp(24px,3.4vw,44px);align-items:start;padding:clamp(28px,4vw,42px) 0;border-top:1px solid var(--line-soft)}
+.entry:first-of-type{border-top:0;padding-top:0}
+@media(max-width:860px){.entry{grid-template-columns:1fr;gap:22px}}
+.entry-info h3{font-size:clamp(1.3rem,2.6vw,1.68rem);letter-spacing:-.018em;font-variation-settings:"wdth" 106;margin-bottom:10px}
+.tagline{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:14px}
+.tagline .dot{width:3px;height:3px;border-radius:50%;background:var(--line);flex:none}
+.pill{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;border:1px solid currentColor;flex:none;
+}
+.pill.live{color:var(--live)}
+.pill.wip{color:var(--wip)}
+.pill.shipped{color:var(--accent)}
+.entry-info p{margin:0 0 16px;color:var(--ink-2)}
+.entry-info p strong{color:var(--ink);font-weight:500}
+
+.spec{display:grid;grid-template-columns:auto 1fr;gap:0 18px;margin:0 0 18px;border-top:1px solid var(--line-soft)}
+.spec dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding:8px 0;border-bottom:1px solid var(--line-soft)}
+.spec dd{margin:0;font-family:var(--f-mono);font-size:12.5px;color:var(--ink);padding:8px 0;border-bottom:1px solid var(--line-soft);font-variant-numeric:tabular-nums}
+
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+  font-family:var(--f-mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;
+  padding:9px 16px;border-radius:var(--radius);border:1px solid var(--line);
+  color:var(--ink);background:var(--panel);transition:border-color .18s,background .18s,transform .18s;
+}
+.btn:hover{border-color:var(--accent);background:var(--panel-2);transform:translateY(-1px)}
+.btn.primary{background:var(--accent);color:#1a1408;border-color:var(--accent);font-weight:500}
+.btn.primary:hover{background:#f2ae4d;border-color:#f2ae4d}
+
+/* ---------- media panel ---------- */
+.media{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);overflow:hidden}
+.frame{position:relative;aspect-ratio:16/9;background:var(--panel-2);display:flex;align-items:center;justify-content:center}
+.frame video,.frame img{width:100%;height:100%;object-fit:cover}
+.frame.empty{
+  background-image:repeating-linear-gradient(135deg,transparent 0 11px,rgba(255,255,255,.028) 11px 22px);
+}
+.empty-note{text-align:center;padding:20px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);line-height:1.9}
+.empty-note b{display:block;color:var(--ink-2);font-weight:400;letter-spacing:.14em}
+
+.playtile{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-decoration:none;background:radial-gradient(60% 70% at 50% 45%,rgba(233,161,59,.18),transparent 70%);transition:background .25s}
+.playtile:hover{background:radial-gradient(65% 75% at 50% 45%,rgba(233,161,59,.3),transparent 72%)}
+.playtile .disc{width:62px;height:62px;border-radius:50%;border:1px solid var(--accent);display:grid;place-items:center;background:rgba(22,24,29,.55);transition:transform .25s}
+.playtile:hover .disc{transform:scale(1.07)}
+.playtile .disc svg{width:20px;height:20px;margin-left:3px;fill:var(--accent)}
+.playtile span{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+
+.thumbs{display:flex;gap:1px;background:var(--line-soft);border-top:1px solid var(--line-soft)}
+.thumbs button{
+  flex:1;padding:0;border:0;background:var(--panel-2);cursor:pointer;aspect-ratio:16/9;
+  opacity:.5;transition:opacity .18s;overflow:hidden;
+}
+.thumbs button img{width:100%;height:100%;object-fit:cover}
+.thumbs button[aria-current="true"],.thumbs button:hover{opacity:1}
+.cap{padding:10px 14px;border-top:1px solid var(--line-soft);font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase}
+
+/* ---------- reel / secondary list ---------- */
+.reel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:var(--radius);overflow:hidden}
+.reel-item{background:var(--panel);padding:22px 20px}
+.reel-media{margin-bottom:15px}
+.reel-media:empty{display:none}
+.reel-item h4{font-family:var(--f-display);font-size:1.02rem;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+.reel-item p{margin:0;color:var(--ink-2);font-size:14.5px}
+.reel-item .num{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--accent);display:block;margin-bottom:10px;font-variant-numeric:tabular-nums}
+
+/* ---------- toolkit ---------- */
+.kit{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px}
+@media(max-width:900px){.kit{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.kit{grid-template-columns:1fr}
+.reel-grid{grid-template-columns:1fr}}
+.kit h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:400;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line-soft)}
+.tags{display:flex;flex-wrap:wrap;gap:7px;list-style:none;margin:0;padding:0}
+.tags li{font-size:13px;padding:5px 11px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink-2)}
+.tags li.key{border-color:rgba(233,161,59,.45);color:var(--ink);background:var(--accent-soft)}
+
+/* ---------- experience ---------- */
+.track{list-style:none;margin:0;padding:0 0 0 22px;position:relative}
+.track::before{content:"";position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.track li{position:relative;padding-bottom:26px}
+.track li:last-child{padding-bottom:0}
+.track li::before{content:"";position:absolute;left:-22px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--ground);border:1px solid var(--ink-3)}
+.track li.now::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.track time{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:3px;font-variant-numeric:tabular-nums}
+.track h4{font-family:var(--f-display);font-size:1.02rem;font-weight:600;margin:0 0 3px}
+.track p{margin:0;color:var(--ink-2);font-size:14.5px}
+
+/* ---------- contact ---------- */
+.contact-card{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(160deg,var(--panel-2),var(--panel));padding:clamp(28px,4.5vw,44px)}
+.contact-card h2{font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.02em;font-variation-settings:"wdth" 110;margin-bottom:12px}
+.contact-card p{color:var(--ink-2);max-width:56ch;margin:0 0 24px}
+footer{padding:26px 0 44px;color:var(--ink-3);font-family:var(--f-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ---------- motion ---------- */
+.rise{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.6,.2,1),transform .6s cubic-bezier(.2,.6,.2,1)}
+.rise.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rise{opacity:1;transform:none;transition:none}
+  *{animation:none!important;transition-duration:.01ms!important}
+}
+
+html{scroll-behavior:smooth}
+section[id],div.hero{scroll-margin-top:70px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <div class="mark">PRATEEK L N<span>.</span></div>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#reel">Reel</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Game Development Team Lead &nbsp;·&nbsp; Bangalore, India</p>
+    <h1>Prateek <em>L N</em></h1>
+    <p class="lede">I build and ship Unity games &mdash; gameplay systems, editor tooling and release pipelines across Android, iOS and WebGL. I came into this as a 3D animator, so I read a scene the way an artist does and build it the way an engineer has to.</p>
+    <dl class="meta-strip">
+      <div><dt>Role</dt><dd>Game Development Team Lead</dd></div>
+      <div><dt>Engines</dt><dd>Unity 6 &nbsp;·&nbsp; Unreal 5</dd></div>
+      <div><dt>Ships on</dt><dd>Android &nbsp;·&nbsp; iOS &nbsp;·&nbsp; WebGL</dd></div>
+      <div><dt>Based in</dt><dd>Bangalore, India</dd></div>
+    </dl>
+  </div>
+</div>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">Selected work</p>
+      <h2>Games and systems I&rsquo;ve built</h2>
+      <p class="lede">Four projects, from a live browser build you can play right now to the 120-title program I lead at work.</p>
+    </div>
+
+    <!-- ============ RUN FOR THE TIME ============ -->
+    <article class="entry rise">
+      <div class="media" data-media="run-for-the-time">
+        <div class="frame">
+          <a class="playtile" href="https://prateek-ln2002.github.io/run-for-the-time/" target="_blank" rel="noopener">
+            <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+            <span>Play the build</span>
+          </a>
+        </div>
+        <p class="cap">Live WebGL build &nbsp;·&nbsp; desktop and mobile</p>
+      </div>
+      <div class="entry-info">
+        <h3>Run For The Time</h3>
+        <p class="tagline"><span class="pill live">Live</span><span>Unity 6</span><span class="dot"></span><span>URP</span><span class="dot"></span><span>WebGL</span></p>
+        <p>A 3D endless runner built to be finished and put in front of players, not left in a folder. Procedurally chunked track, run timer, pickups and a chase camera &mdash; and on top of that, the entire front end, the mobile touch controls and the WebGL release pipeline that puts it online.</p>
+        <p>The core loop came out of the GameDev.tv course project. <strong>Everything around it &mdash; the front end, mobile input and the build-and-release pipeline &mdash; is mine.</strong></p>
+        <dl class="spec">
+          <dt>Engine</dt><dd>Unity 6 (URP)</dd>
+          <dt>Platform</dt><dd>WebGL &mdash; desktop + mobile</dd>
+          <dt>Role</dt><dd>Solo developer</dd>
+          <dt>Status</dt><dd>Live, playable</dd>
+        </dl>
+        <div class="btn-row">
+          <a class="btn primary" href="https://prateek-ln2002.github.io/run-for-the-time/" target="_blank" rel="noopener">Play in browser</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ SHARP SHOOTER ============ -->
+    <article class="entry rise">
+      <div class="media" data-media="sharp-shooter">
+        <div class="frame">
+          <a class="playtile" href="https://prateek-ln2002.github.io/sharp-shooter/" target="_blank" rel="noopener">
+            <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+            <span>Play the build</span>
+          </a>
+        </div>
+        <p class="cap">Live WebGL build &nbsp;&middot;&nbsp; desktop</p>
+      </div>
+      <div class="entry-info">
+        <h3>Sharp Shooter</h3>
+        <p class="tagline"><span class="pill live">Live</span><span>Unity 6</span><span class="dot"></span><span>URP</span><span class="dot"></span><span>First person</span></p>
+        <p>A first-person wave shooter. Three generated levels feed a campaign, with a two-slot loadout drawn from pistol, machine gun and sniper, and boss encounters that close out each run.</p>
+        <p>A CRT-style radar keeps the player reading the room instead of the HUD, and campaign progress persists between sessions.</p>
+        <dl class="spec">
+          <dt>Engine</dt><dd>Unity 6 (URP)</dd>
+          <dt>Genre</dt><dd>Wave-based FPS</dd>
+          <dt>Role</dt><dd>Solo developer</dd>
+          <dt>Systems</dt><dd>Level generation, loadout, bosses, radar</dd>
+        </dl>
+        <div class="btn-row">
+          <a class="btn primary" href="https://prateek-ln2002.github.io/sharp-shooter/" target="_blank" rel="noopener">Play in browser</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ LEARNING PROGRAM ============ -->
+    <article class="entry rise">
+      <div class="media" data-media="learning-program">
+        <div class="frame empty">
+          <p class="empty-note"><b>120-game learning program</b>Gameplay capture</p>
+        </div>
+      </div>
+      <div class="entry-info">
+        <h3>FLN Learning Program &mdash; 120 games</h3>
+        <p class="tagline"><span class="pill shipped">Shipped</span><span>Team lead</span><span class="dot"></span><span>Android</span><span class="dot"></span><span>iOS</span><span class="dot"></span><span>WebGL</span></p>
+        <p>The work I lead at Jnyanam Innovative Learning: a 120-title educational game program for young children, delivered set by set and shipping on phone, tablet and web.</p>
+        <p>Rather than build 120 one-off games, we built one configurable mechanic system &mdash; <strong>CombinedGameMechanicManager, with a custom Unity editor</strong> &mdash; covering button-clicker, match-the-pairs and drag-and-drop mechanics, alongside shared managers for player data, scoring and leaderboards. A new game is now mostly configuration rather than new code. Each set spans twelve learning categories, from sensory and numeracy through to daily-life skills.</p>
+        <dl class="spec">
+          <dt>Role</dt><dd>Game Development Team Lead</dd>
+          <dt>Team</dt><dd>9&ndash;10 developers and artists</dd>
+          <dt>Scale</dt><dd>120 games, delivered in sets</dd>
+          <dt>Platforms</dt><dd>Android, iOS, WebGL</dd>
+        </dl>
+      </div>
+    </article>
+
+    <!-- ============ ROOM TONE ============ -->
+    <article class="entry rise">
+      <div class="media" data-media="room-tone">
+        <div class="frame empty">
+          <p class="empty-note"><b>Room Tone</b>Gameplay capture</p>
+        </div>
+      </div>
+      <div class="entry-info">
+        <h3>Room Tone</h3>
+        <p class="tagline"><span class="pill wip">In development</span><span>Unity 6 LTS</span><span class="dot"></span><span>Horror</span><span class="dot"></span><span>Solo</span></p>
+        <p>A solo first-person psychological horror piece, scoped as a tight fifteen minutes rather than a demo that never ends.</p>
+        <p>The design constraint is hardware: mid-level visuals that still hold up on a low-end machine. The GDD, production plan and story bible are written; the build is underway.</p>
+        <dl class="spec">
+          <dt>Engine</dt><dd>Unity 6 LTS</dd>
+          <dt>Scope</dt><dd>15-minute story experience</dd>
+          <dt>Role</dt><dd>Solo &mdash; design, code, build</dd>
+          <dt>Target</dt><dd>Low-end PCs</dd>
+        </dl>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="reel">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">Animation &amp; rendering</p>
+      <h2>Where I started &mdash; and still deliver</h2>
+      <p class="lede">Production animation and rendering work, the background that makes me quicker at the art side of a game team.</p>
+    </div>
+    <div class="reel-grid rise">
+      <div class="reel-item">
+        <div class="media reel-media" data-media="reel-titan"></div>
+        <span class="num">MAYA &nbsp;·&nbsp; V-RAY</span>
+        <h4>Titan safety briefing film</h4>
+        <p>A 3D safety briefing film produced for Titan and used industrially. Non-organic rigging, keyframe animation and lighting, built to land in a single viewing.</p>
+      </div>
+      <div class="reel-item">
+        <div class="media reel-media" data-media="reel-kids"></div>
+        <span class="num">15&ndash;20 FILMS &nbsp;·&nbsp; AGES 1&ndash;5</span>
+        <h4>Children&rsquo;s story &amp; poem films</h4>
+        <p>Animated story and poem films for children aged one to five &mdash; character animation, lighting and look dev tuned for very young viewers.</p>
+      </div>
+      <div class="reel-item">
+        <div class="media reel-media" data-media="reel-unreal"></div>
+        <span class="num">40&ndash;45 VIDEOS &nbsp;·&nbsp; UNREAL</span>
+        <h4>Unreal render pipeline</h4>
+        <p>Set up and ran the Unreal Engine render pipeline behind 40 to 45 finished videos, including lighting, shading and look dev passes.</p>
+      </div>
+      <div class="reel-item">
+        <div class="media reel-media" data-media="reel-test"></div>
+        <span class="num">CREATURE TEST &nbsp;·&nbsp; 60 FPS</span>
+        <h4>Studio animation test</h4>
+        <p>A creature death test on a studio rig: hit from the front, a 75&nbsp;cm stagger, a fall to the left and the death beat &mdash; all inside five to eight seconds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="toolkit">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">Toolkit</p>
+      <h2>What I work with</h2>
+    </div>
+    <div class="kit rise">
+      <div>
+        <h4>Game development</h4>
+        <ul class="tags">
+          <li class="key">Unity 6</li><li class="key">C#</li><li class="key">URP</li>
+          <li>Gameplay programming</li><li>Editor tooling</li><li>Mobile &amp; WebGL builds</li>
+          <li>Performance optimisation</li><li>Save &amp; progression systems</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Engine &amp; pipeline</h4>
+        <ul class="tags">
+          <li class="key">Unreal Engine</li><li class="key">Blueprints</li>
+          <li>Git</li><li>WebGL deployment</li><li>Android &amp; iOS release</li><li>AI-assisted development</li>
+        </ul>
+      </div>
+      <div>
+        <h4>3D &amp; rendering</h4>
+        <ul class="tags">
+          <li class="key">Maya</li><li class="key">V-Ray</li>
+          <li>Keyframe animation</li><li>Non-organic rigging</li><li>Mocap cleanup</li>
+          <li>Lighting</li><li>Shading &amp; look dev</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Leading</h4>
+        <ul class="tags">
+          <li class="key">Team leadership</li>
+          <li>Mentoring</li><li>Sprint &amp; set planning</li><li>Client delivery</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="path">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <p class="eyebrow">Experience</p>
+      <h2>Animator to team lead, in two years</h2>
+    </div>
+    <ol class="track rise">
+      <li class="now">
+        <time>Mar 2025 &mdash; Present</time>
+        <h4>Game Development Team Lead &mdash; Jnyanam Innovative Learning</h4>
+        <p>Leading a team of 9&ndash;10 on the 120-game learning program, across architecture, delivery and review.</p>
+      </li>
+      <li>
+        <time>Nov 2024 &mdash; Mar 2025</time>
+        <h4>Game Developer &mdash; Jnyanam Innovative Learning</h4>
+        <p>Moved from animation into development and built the game development team from scratch.</p>
+      </li>
+      <li>
+        <time>Aug 2024 &mdash; Nov 2024</time>
+        <h4>3D Animator &mdash; Jnyanam Innovative Learning</h4>
+        <p>Character animation, lighting and rendering for children&rsquo;s educational films.</p>
+      </li>
+      <li>
+        <time>Jan 2023 &mdash; Apr 2025</time>
+        <h4>Arena Animation International Program (Trinity), Bangalore</h4>
+        <p>Jayanagar centre &mdash; grade: Credit.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-card rise">
+      <h2>Get in touch</h2>
+      <p>Email is the fastest way to reach me. Happy to walk through any of these projects, send builds, or talk through how a particular system was put together.</p>
+      <div class="btn-row">
+        <a class="btn primary" href="mailto:prateek@jnyanam.com">Email me</a>
+        <a class="btn" href="https://github.com/Prateek-LN2002" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <footer>
+      <span>Prateek L N &nbsp;·&nbsp; Bangalore, India</span>
+      <span>Updated September 2026</span>
+    </footer>
+  </div>
+</section>
+<script>
+/* ============================================================
+   MEDIA CONFIG — the only place you edit to add gameplay media.
+   Drop files into assets/media/<project>/ then fill in an entry.
+
+   video:   { video:"assets/media/sharp-shooter/gameplay.mp4",
+              poster:"assets/media/sharp-shooter/poster.jpg",
+              caption:"Wave 7 — sniper loadout" }
+
+   images:  { shots:[ "assets/media/room-tone/01.jpg",
+                      "assets/media/room-tone/02.jpg" ],
+              caption:"Vertical slice, corridor pass" }
+
+   Leave an entry as {} and the panel keeps its placeholder.
+   ============================================================ */
+const MEDIA = {
+  "sharp-shooter":    {},
+  "learning-program": {},
+  "room-tone":        {},
+
+  /* animation & rendering reel — same shape */
+  "reel-titan":       {},
+  "reel-kids":        {},
+  "reel-unreal":      {},
+  "reel-test":        {}
+};
+
+(function renderMedia(){
+  Object.keys(MEDIA).forEach(function(key){
+    var cfg = MEDIA[key];
+    var host = document.querySelector('[data-media="' + key + '"]');
+    if (!host || !cfg || (!cfg.video && !(cfg.shots && cfg.shots.length))) return;
+
+    var frame = document.createElement("div");
+    frame.className = "frame";
+
+    if (cfg.video) {
+      var v = document.createElement("video");
+      v.controls = true;
+      v.preload = "metadata";
+      v.playsInline = true;
+      if (cfg.poster) v.poster = cfg.poster;
+      v.src = cfg.video;
+      frame.appendChild(v);
+      host.innerHTML = "";
+      host.appendChild(frame);
+    } else {
+      var img = document.createElement("img");
+      img.src = cfg.shots[0];
+      img.alt = key.replace(/-/g, " ") + " screenshot";
+      img.loading = "lazy";
+      frame.appendChild(img);
+      host.innerHTML = "";
+      host.appendChild(frame);
+
+      if (cfg.shots.length > 1) {
+        var strip = document.createElement("div");
+        strip.className = "thumbs";
+        cfg.shots.forEach(function(src, i){
+          var b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute("aria-current", i === 0 ? "true" : "false");
+          b.setAttribute("aria-label", "Show screenshot " + (i + 1));
+          var t = document.createElement("img");
+          t.src = src; t.alt = ""; t.loading = "lazy";
+          b.appendChild(t);
+          b.addEventListener("click", function(){
+            img.src = src;
+            strip.querySelectorAll("button").forEach(function(o){ o.setAttribute("aria-current","false"); });
+            b.setAttribute("aria-current","true");
+          });
+          strip.appendChild(b);
+        });
+        host.appendChild(strip);
+      }
+    }
+
+    if (cfg.caption) {
+      var cap = document.createElement("p");
+      cap.className = "cap";
+      cap.textContent = cfg.caption;
+      host.appendChild(cap);
+    }
+  });
+})();
+
+/* ---- scroll reveal ---- */
+(function reveal(){
+  var items = document.querySelectorAll(".rise");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) {
+    items.forEach(function(el){ el.classList.add("in"); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
+  items.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
