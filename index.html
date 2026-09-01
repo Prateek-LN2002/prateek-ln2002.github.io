@@ -191,6 +191,7 @@ section{padding:clamp(52px,8vw,84px) 0;border-top:1px solid var(--line-soft)}
 .tags li.key{border-color:rgba(233,161,59,.45);color:var(--ink);background:var(--accent-soft)}
 
 /* ---------- experience ---------- */
+.frame .shotlink{display:block}
 .track{list-style:none;margin:0;padding:0 0 0 22px;position:relative}
 .track::before{content:"";position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:var(--line)}
 .track li{position:relative;padding-bottom:26px}
@@ -455,9 +456,26 @@ section[id],div.hero{scroll-margin-top:70px}
         <p>Character animation, lighting and rendering for children&rsquo;s educational films.</p>
       </li>
       <li>
-        <time>Jan 2023 &mdash; Apr 2025</time>
+        <time>2022 &mdash; 2024</time>
         <h4>Arena Animation International Program (Trinity), Bangalore</h4>
         <p>Jayanagar centre &mdash; grade: Credit.</p>
+      </li>
+    </ol>
+
+    <div class="sec-head rise" style="margin-top:56px">
+      <p class="eyebrow">Certifications</p>
+      <h2>Recent training</h2>
+    </div>
+    <ol class="track rise">
+      <li>
+        <time>Aug 2026</time>
+        <h4>Complete C# Unity 3D Game Development in Unity 6 &mdash; Udemy</h4>
+        <p>27 hours, GameDev.tv (Rick Davidson, Stephen Hubbard). Certificate UC-6e02b9da-0f3f-40ef-82c1-8c65738cf2ef.</p>
+      </li>
+      <li>
+        <time>2026</time>
+        <h4>Building with the Claude API &mdash; Anthropic</h4>
+        <p>Certificate of completion &mdash; building applications on the Anthropic API.</p>
       </li>
     </ol>
   </div>
@@ -495,7 +513,12 @@ section[id],div.hero{scroll-margin-top:70px}
    Leave an entry as {} and the panel keeps its placeholder.
    ============================================================ */
 const MEDIA = {
-  "sharp-shooter":    {},
+  "run-for-the-time": { shots:["assets/media/run-for-the-time/image01.png"],
+                        href:"https://prateek-ln2002.github.io/run-for-the-time/",
+                        caption:"Live WebGL build · desktop and mobile — click to play" },
+  "sharp-shooter":    { shots:["assets/media/sharp-shooter/image01.png"],
+                        href:"https://prateek-ln2002.github.io/sharp-shooter/",
+                        caption:"Live WebGL build · desktop — click to play" },
   "learning-program": {},
   "room-tone":        {},
 
@@ -531,6 +554,13 @@ const MEDIA = {
       img.alt = key.replace(/-/g, " ") + " screenshot";
       img.loading = "lazy";
       frame.appendChild(img);
+      if (cfg.href) {
+        var a = document.createElement("a");
+        a.href = cfg.href; a.target = "_blank"; a.rel = "noopener";
+        a.className = "shotlink";
+        a.appendChild(img.parentNode.removeChild(img));
+        frame.appendChild(a);
+      }
       host.innerHTML = "";
       host.appendChild(frame);
 
