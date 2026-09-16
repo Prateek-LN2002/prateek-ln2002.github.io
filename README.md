@@ -92,11 +92,3 @@ const MEDIA = {
   ```bash
   ffmpeg -i gameplay.mp4 -ss 3 -vframes 1 poster.jpg
   ```
-
----
-
-## 3. Things to change before you send it out
-
-- **Email** — currently your work address, `prateek@jnyanam.com`. Swap it for a personal one in the contact section.
-- **LinkedIn** — no link yet. Add another button next to GitHub in the `#contact` section.
-- **Share image** — add `assets/og.jpg` (1200×630) and uncomment the `og:image` line in `<head>` so the link shows a preview when you paste it.
